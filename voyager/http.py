@@ -1,6 +1,7 @@
 import asyncio
 import datetime
 from collections import namedtuple
+from voyager.neoresource import NEOResource
 
 import aiohttp
 import yarl
@@ -33,6 +34,7 @@ class HTTPClient():
         )
         self._mapping = {
             'apod': '_get_apod',
+            'neo': '_get_neo',
         }
         self._bucket = {}
         self._rls = {}
@@ -43,31 +45,32 @@ class HTTPClient():
     def get_ratelimit(self, route: str) -> namedtuple:
         return self._rls.get(route, None)
 
-    def _ensure_valid_query(self, route: str, **options):
-        unsupported = [(key, value) for key, value in options.items()
-                       if key not in VALID_KEYS[route]]
-        if unsupported:
-            raise InvalidQuery(unsupported)
+    def _ensure_valid_query(self, route: str, **options) -> dict:
+        return {
+            key: value for key, value in options.items()
+            if key in VALID_KEYS[route]
+        }
 
     def _get_url(self, route: str, **options) -> str:
-        self._ensure_valid_query(route, **options)
+        valid_options = self._ensure_valid_query(route, **options)
+        valid_options['api_key'] = self._key
         url = yarl.URL.build(
             scheme="https",
             host="api.nasa.gov",
             path=ROUTES[route],
-            query=options,
+            query=valid_options,
         )
         return str(url)
 
     async def request(self, route: str, method: str = None, **options) -> APODResource:
-        url = self._generate_url(route, **options)
+        url = options.get("url") or self._get_url(route, **options)
         for tries in range(5):
             if (rls := self._rls.get(route, None)):
                 if rls.remaining == 0:
                     raise RateLimitException()
             await asyncio.sleep(2 ** tries if tries else 0)
             try:
-                response, ret = await self._mapping.get(route)(self, url=url, method=method)
+                response, ret = await self._mapping.get(route)(self, url=url, method=method, **options)
                 return ret
             except OSError as e:
                 if tries < 4 and e.errno in (54, 10054):
@@ -89,3 +92,6 @@ class HTTPClient():
             self._bucket['apod'] = int(datetime.datetime.now())
 
         return response, APODResource(response=ret, loop=self._loop)
+
+    async def _get_neo(self, url: str = None, **kwargs) -> NEOResource:
+        search_type = kwargs.get("search_type")

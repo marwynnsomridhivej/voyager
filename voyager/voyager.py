@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import re
 from typing import List, Union
+from voyager.utils import BASE_URL
 
 import aiohttp
 
@@ -67,4 +68,30 @@ class Client():
     async def neo_feed(self, start_date: Union[datetime.datetime, str, None] = None,
                        end_date: Union[datetime.datetime, str, None] = None) -> NEOResource:
         if not (start_date or end_date):
-            ret = await self._http_client.request(route='')
+            ret = await self._http_client.request(route="neo", search_type="feed-none")
+        else:
+            dates = {}
+            if start_date:
+                dates['start_date'] = start_date
+            if end_date:
+                dates['end_date'] = end_date
+            ret = await self._http_client.request(
+                route="neo",
+                search_type="feed-query",
+                **dates,
+            )
+        return ret
+
+    async def neo_lookup(self, asteroid_id) -> NEOResource:
+        return await self._http_client.request(
+            route="neo",
+            search_type="lookup",
+            url=f"{BASE_URL}/neo/rest/v1/neo/{asteroid_id}?api_key={self._key}"
+        )
+
+    async def neo_browse(self) -> NEOResource:
+        return await self._http_client.request(
+            route="neo",
+            search_type="browse",
+            url=f"{BASE_URL}/neo/rest/v1/neo/browse?api_key={self._key}"
+        )
