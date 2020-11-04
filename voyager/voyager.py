@@ -62,8 +62,7 @@ class Client():
             'date': date,
             'hd': hd,
         }
-        ret = await self._http_client.request(route='apod', method="GET", **options)
-        return ret
+        return await self._http_client.request(route='apod', method="GET", **options)
 
     async def neo_feed(self, start_date: Union[datetime.datetime, str, None] = None,
                        end_date: Union[datetime.datetime, str, None] = None) -> NEOResource:
