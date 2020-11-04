@@ -1,0 +1,8 @@
+*.json
+*.pyc
+*.code-workspace
+*.egg-info
+.vscode
+formats
+build
+__pycache__
