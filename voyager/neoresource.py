@@ -3,9 +3,8 @@ from asyncio.events import AbstractEventLoop
 from collections import namedtuple
 from typing import List, Union
 
-from voyager.base import BaseResource
-
-from .exceptions import VoyagerException, ResourceException
+from .base import BaseResource
+from .exceptions import ResourceException, VoyagerException
 
 _Diameter = namedtuple("Diameter", ['min', 'max'])
 

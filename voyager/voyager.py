@@ -2,13 +2,12 @@ import asyncio
 import datetime
 import re
 from typing import List, Union
-from voyager.utils import BASE_URL
 
 import aiohttp
 
 from .http import HTTPClient
 from .resource import APODResource, NEOResource
-
+from .utils import BASE_URL
 
 _DATE_RX = re.compile(r'[1|2][0|9][0-9]{2}')
 
