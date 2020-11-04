@@ -3,13 +3,18 @@ from asyncio.events import AbstractEventLoop
 from collections import namedtuple
 from typing import List, Union
 
+from ..exceptions import ResourceException, VoyagerException
 from .base import BaseResource
-from .exceptions import ResourceException, VoyagerException
+
+__all__ = [
+    'NEOResource',
+]
+
 
 _Diameter = namedtuple("Diameter", ['min', 'max'])
 
 
-class NEOLinks():
+class NEOLinks(object):
     __slots__ = [
         '_next',
         '_self',
@@ -44,7 +49,7 @@ class NEOLinks():
         return cls(data)
 
 
-class NEOPage():
+class NEOPage(object):
     __slots__ = [
         '_size',
         '_total_elements',
@@ -91,7 +96,7 @@ class NEOPage():
         return cls(data)
 
 
-class NEOOrbitClass():
+class NEOOrbitClass(object):
     __slots__ = [
         '_type',
         '_description',
@@ -126,7 +131,7 @@ class NEOOrbitClass():
         return cls(data)
 
 
-class NEOOrbitalData():
+class NEOOrbitalData(object):
     __slots__ = [
         '_id',
         '_determination_date',
@@ -301,7 +306,7 @@ class NEOOrbitalData():
         return cls(data)
 
 
-class NEOCloseApproachData():
+class NEOCloseApproachData(object):
     __slots__ = [
         '_date',
         '_fulldate',
@@ -395,7 +400,7 @@ class NEOCloseApproachData():
         return cls(data)
 
 
-class NEOObject():
+class NEOObject(object):
     __slots__ = [
         '_links',
         '_id',
@@ -520,18 +525,19 @@ class NEOResource(BaseResource):
         '_links',
         '_page'
         '_element_count',
-        '_resp',
+        'search_type',
+        '_data',
     ]
     _cache = {}
 
-    def __init__(self, resp: dict = None,
+    def __init__(self, data: dict,
                  loop: AbstractEventLoop = None) -> None:
-        super(NEOResource, self).__init__(resp, loop=loop)
-        self._links = NEOLinks(resp.get("links", {}))
-        self._page = NEOPage(resp.get("page", {}))
-        self._element_count = resp.get("element_count")
-        self._data = resp
-        self._search_type = resp.get("search_type")
+        super(NEOResource, self).__init__(data, loop=loop)
+        self._links = NEOLinks(data.get("links", {}))
+        self._page = NEOPage(data.get("page", {}))
+        self._element_count = data.get("element_count")
+        self._search_type = data.get("search_type")
+        self._data = data
 
     def __iter__(self):
         self.__index = 0
@@ -579,6 +585,6 @@ class NEOResource(BaseResource):
         return self._data
 
     @classmethod
-    def from_dict(cls, resp: dict,
+    def from_dict(cls, data: dict,
                   loop: AbstractEventLoop = None) -> "NEOResource":
-        return cls(resp=resp, loop=loop)
+        return cls(data, loop=loop)

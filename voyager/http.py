@@ -1,13 +1,14 @@
 import asyncio
 import datetime
 from collections import namedtuple
-from voyager.neoresource import NEOResource
+from typing import Tuple
 
 import aiohttp
+from aiohttp.client_reqrep import ClientResponse
 import yarl
 
-from .exceptions import HTTPException, InvalidQuery, RateLimitException
-from .resource import APODResource
+from .exceptions import HTTPException, RateLimitException
+from .resources import APODResource, NEOResource
 from .utils import ROUTES, VALID_KEYS
 
 _RLS = namedtuple("Ratelimit Status", ['limit', 'remaining'])
@@ -35,6 +36,16 @@ class HTTPClient():
         self._mapping = {
             'apod': '_get_apod',
             'neo': '_get_neo',
+            'cme': '_get_cme',
+            'cme-a': '_get_cme_a',
+            'gst': '_get_gst',
+            'ips': '_get_ips',
+            'flr': '_get_flr',
+            'sep': '_get_sep',
+            'mpc': '_get_mpc',
+            'rbe': '_get_rbe',
+            'hss': '_get_hss',
+            'wsa-enlil': '_get_wsa_enlil',
         }
         self._bucket = {}
         self._rls = {}
@@ -79,19 +90,30 @@ class HTTPClient():
         else:
             raise HTTPException(response.status)
 
-    async def _get_apod(self, url: str = None, **kwargs) -> APODResource:
+    async def _get_apod(self, url: str = None, **kwargs) -> Tuple[ClientResponse, APODResource]:
         async with self._session.get(url) as response:
             raw = await response.read()
             ret = await response.json()
-        ret['raw'], ret['query_url'] = raw, url
+            ret['raw'], ret['query_url'], ret['code'] = raw, url, response.status
+            limit = int(response.headers.get("X-RateLimit-Limit"))
+            remaining = int(response.headers.get("X-RateLimit-Remaining"))
 
-        limit = int(response.headers.get("X-RateLimit-Limit"))
-        remaining = int(response.headers.get("X-RateLimit-Remaining"))
         self._rls['apod'] = _RLS(limit, remaining)
         if limit - remaining == 1:
             self._bucket['apod'] = int(datetime.datetime.now())
 
-        return response, APODResource(response=ret, loop=self._loop)
+        return response, APODResource(ret, loop=self._loop)
 
-    async def _get_neo(self, url: str = None, **kwargs) -> NEOResource:
+    async def _get_neo(self, url: str = None, **kwargs) -> Tuple[ClientResponse, NEOResource]:
         search_type = kwargs.get("search_type")
+        async with self._session.get(url) as response:
+            ret = await response.json()
+            ret['query_url'], ret['code'], ret['search_type'] = url, response.status, search_type
+            limit = int(response.headers.get("X-RateLimit-Limit"))
+            remaining = int(response.headers.get("X-RateLimit-Remaining"))
+        
+        self._rls['neo'] = _RLS(limit, remaining)
+        if limit - remaining == 1:
+            self._bucket['neo'] = int(datetime.datetime.now())
+        
+        return response, NEOResource(ret, loop=self._loop)

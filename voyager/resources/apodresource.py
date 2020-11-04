@@ -4,12 +4,16 @@ from io import BytesIO
 from typing import Tuple, Union
 
 from .base import BaseResource
-from .decorators import check_pil_importable
+from ..decorators import check_pil_importable
 
 try:
     from PIL import Image
 except ImportError:
     pass
+
+__all__ = [
+    'APODResource',
+]
 
 
 class APODResource(BaseResource):
@@ -27,22 +31,22 @@ class APODResource(BaseResource):
     ]
     _cache = {}
 
-    def __init__(self, resp: dict = None,
+    def __init__(self, data: dict,
                  loop: AbstractEventLoop = None) -> None:
-        super(APODResource, self).__init__(resp, loop=loop)
-        self._msg = resp.get("msg")
-        self._service_version = resp.get("service_version", "v1")
-        self._concepts = resp.get("concepts")
-        self._copyright = resp.get("copyright", "Public Domain")
-        self._date = resp.get("date")
-        self._explanation = resp.get("explanation")
-        self._url = resp.get("hdurl") or resp.get("url")
-        self._media_type = resp.get("media_type")
-        self._title = resp.get("title")
-        self._bytes = resp.get("raw")
+        super(APODResource, self).__init__(data, loop=loop)
+        self._msg = data.get("msg")
+        self._service_version = data.get("service_version", "v1")
+        self._concepts = data.get("concepts")
+        self._copyright = data.get("copyright", "Public Domain")
+        self._date = data.get("date")
+        self._explanation = data.get("explanation")
+        self._url = data.get("hdurl") or data.get("url")
+        self._media_type = data.get("media_type")
+        self._title = data.get("title")
+        self._bytes = data.get("raw")
         if not self._msg:
             del self.error
-        self._data = resp
+        self._data = data
 
     @property
     def msg(self) -> Union[str, None]:
@@ -117,6 +121,6 @@ class APODResource(BaseResource):
         return self._data
 
     @classmethod
-    def from_dict(cls, resp: dict,
+    def from_dict(cls, data: dict,
                   loop: AbstractEventLoop = None) -> "APODResource":
-        return cls(resp=resp, loop=loop)
+        return cls(data, loop=loop)
