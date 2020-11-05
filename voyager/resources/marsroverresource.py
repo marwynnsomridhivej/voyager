@@ -4,6 +4,12 @@ from .base import BaseResource
 import datetime
 
 
+__all__ = [
+    'MarsRoverResource',
+    'MarsManifestResource',
+]
+
+
 class MarsCamera(object):
     __slots__ = [
         '_id',

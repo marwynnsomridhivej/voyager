@@ -6,6 +6,7 @@ from .base import BaseResource
 
 __all__ = [
     'CMEResource',
+    'CMEAnalysisResource',
 ]
 
 
