@@ -1,17 +1,14 @@
 import asyncio
-from voyager.resources.gstresource import GSTResource
-
-from attr import s
-from build.lib.voyager.exceptions import VoyagerException
 import datetime
 import re
 from typing import List, Union
-from voyager.resources.cmeresource import CMEAnalysisResource, CMEResource
 
 import aiohttp
 
+from .exceptions import VoyagerException
 from .http import HTTPClient
-from .resources import APODResource, NEOResource
+from .resources import (APODResource, CMEAnalysisResource, CMEResource,
+                        GSTResource, NEOResource)
 from .utils import BASE_URL
 
 _DATE_RX = re.compile(r'[1|2][0|9][0-9]{2}')
@@ -111,7 +108,7 @@ class Client():
 
     async def cme(self,
                   start_date: Union[datetime.datetime, str] = None,
-                  end_date: Union[datetime.datetime, str] = None) -> CMEResource:
+                  end_date: Union[datetime.datetime, str] = None) -> List[CMEResource]:
         if not (start_date or end_date):
             ret = await self._http_client.request(
                 route="cme",
@@ -143,7 +140,7 @@ class Client():
                            speed: int = 0,
                            half_angle: int = 0,
                            catalog: str = "ALL",
-                           keyword: str = "NONE") -> CMEAnalysisResource:
+                           keyword: str = "NONE") -> List[CMEAnalysisResource]:
         self._validate_cme_catalog(catalog)
         if not (start_date or end_date):
             ret = await self._http_client.request(
