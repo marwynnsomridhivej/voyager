@@ -1,6 +1,7 @@
 from .apodresource import *
 from .base import *
 from .cmeresource import *
+from .earthresource import *
 from .flrresource import *
 from .gstresource import *
 from .hssresource import *

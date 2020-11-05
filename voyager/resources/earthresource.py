@@ -12,6 +12,12 @@ except ImportError:
     pass
 
 
+__all__ = [
+    'EarthImageryResource',
+    'EarthAssetResource',
+]
+
+
 class EarthResource(object):
     __slots__ = [
         '_dataset',
