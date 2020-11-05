@@ -1,4 +1,4 @@
-from . import voyager
+from .voyager import Client
 
 __author__ = "Marwynn Somridhivej"
 __copyright__ = "Copyright 2020, Marwynn Somridhivej"
