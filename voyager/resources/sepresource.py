@@ -61,7 +61,7 @@ class SEPLinkedEvent(object):
         return self._data
 
     @classmethod
-    def from_dict(cls, data: dict) -> "SEPLinkedObject":
+    def from_dict(cls, data: dict) -> "SEPLinkedEvent":
         return cls(data)
 
 
