@@ -78,4 +78,25 @@ ROUTES = {
     'wsa-enlil': '/DONKI/WASEnlilSimulations',
 }
 
+
+ROVERS = [
+    'curiosity',
+    'opportunity',
+    'spirit',
+]
+
+
+ROVER_CAMERAS = [
+    'fhaz',
+    'rhaz',
+    'mast',
+    'chemcam',
+    'mahli',
+    'mardi',
+    'navcam',
+    'pancam',
+    'minites',
+]
+
+
 BASE_URL = "https://api.nasa.gov"
