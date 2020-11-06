@@ -3,8 +3,8 @@ from asyncio.events import AbstractEventLoop
 from io import BytesIO
 from typing import Tuple, Union
 
-from .base import BaseResource
 from ..decorators import check_pil_importable
+from .base import BaseResource
 
 try:
     from PIL import Image
