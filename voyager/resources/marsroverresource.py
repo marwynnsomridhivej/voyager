@@ -1,5 +1,5 @@
 from asyncio.events import AbstractEventLoop
-from typing import List, Union
+from typing import Generator, List, Union
 from .base import BaseResource
 import datetime
 
@@ -186,7 +186,7 @@ class MarsRoverResource(BaseResource):
         for mp in self.photos:
             yield mp
 
-    def _process_photos(self) -> Union[List[MarsPhoto], MarsPhoto, None]:
+    def _process_photos(self) -> Union[Generator[MarsPhoto], MarsPhoto, None]:
         if not (pic := self._data.get("photos")):
             return None
         elif len(pic) != 1:
@@ -196,13 +196,13 @@ class MarsRoverResource(BaseResource):
             return MarsPhoto(pic[0])
 
     @property
-    def photos(self) -> Union[List[MarsPhoto], MarsPhoto, None]:
+    def photos(self) -> Union[Generator[MarsPhoto], MarsPhoto, None]:
         if self not in self._cache:
             self._cache[self] = self._process_photos()
         return self._cache[self]
 
     @property
-    def all_photos(self) -> Union[List[MarsPhoto], MarsPhoto, None]:
+    def all_photos(self) -> Union[Generator[MarsPhoto], MarsPhoto, None]:
         if (pic := f"{self}all") not in self._cache:
             self._cache[pic] = [mp for mp in self._process_photos()]
         return self._cache[pic]
@@ -248,7 +248,7 @@ class MarsManifestResource(BaseResource):
         return self
 
     def __next__(self):
-        for mp in self.photos():
+        for mp in self.photos:
             yield mp
 
     @property
@@ -295,7 +295,7 @@ class MarsManifestResource(BaseResource):
     def total_photos(self) -> int:
         return self._total_photos
 
-    def _process_photos(self) -> Union[List[MarsPhoto], MarsPhoto, None]:
+    def _process_photos(self) -> Union[Generator[MarsPhoto], MarsPhoto, None]:
         if not (mp := self._pm.get("photos")):
             return None
         elif len(mp) != 1:
@@ -305,7 +305,7 @@ class MarsManifestResource(BaseResource):
             return MarsPhoto(mp[0])
 
     @property
-    def photos(self) -> Union[List[MarsPhoto], MarsPhoto, None]:
+    def photos(self) -> Union[Generator[MarsPhoto], MarsPhoto, None]:
         if self not in self._cache:
             self._cache[self] = self._process_photos()
         return self._cache[self]
