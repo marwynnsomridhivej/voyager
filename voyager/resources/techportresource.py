@@ -5,6 +5,11 @@ from typing import Any, Generator, List, Union
 from .base import BaseResource
 
 
+__all__ = [
+    'TechportResource',
+]
+
+
 class TechportTechnologyArea(object):
     __slots__ = [
         '_id',
