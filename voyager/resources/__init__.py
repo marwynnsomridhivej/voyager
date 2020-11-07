@@ -2,13 +2,17 @@ from .apodresource import *
 from .base import *
 from .cmeresource import *
 from .earthresource import *
+from .fireballresource import *
 from .flrresource import *
 from .gstresource import *
 from .hssresource import *
 from .ipsresource import *
+from .marsroverresource import *
 from .mpcresource import *
 from .neoresource import *
 from .notificationresource import *
 from .rberesource import *
 from .sepresource import *
+from .techportresource import *
+from .techtransferresource import *
 from .wsaresource import *
