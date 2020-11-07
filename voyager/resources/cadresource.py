@@ -6,7 +6,7 @@ from ..exceptions import VoyagerException
 from .base import BaseResource
 
 __all__ = [
-    'SBDBResource',
+    'CADResource',
 ]
 
 
@@ -152,7 +152,7 @@ class CADRecord(object):
         return cls([value for value in data.values()], [key for key in data])
 
 
-class SBDBResource(BaseResource):
+class CADResource(BaseResource):
     __slots__ = [
         '_signature',
         '_count',
@@ -163,7 +163,7 @@ class SBDBResource(BaseResource):
 
     def __init__(self, data: dict,
                  loop: AbstractEventLoop = None) -> None:
-        super(SBDBResource, self).__init__(data, loop=loop)
+        super(CADResource, self).__init__(data, loop=loop)
         self._signature = data.get("signature")
         self._count = data.get("count")
         self._fields = data.get("fields")
@@ -220,5 +220,5 @@ class SBDBResource(BaseResource):
 
     @classmethod
     def from_dict(cls, data: dict,
-                  loop: AbstractEventLoop = None) -> "SBDBResource":
+                  loop: AbstractEventLoop = None) -> "CADResource":
         return cls(data, loop=loop)
