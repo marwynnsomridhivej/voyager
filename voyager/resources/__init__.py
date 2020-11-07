@@ -23,7 +23,7 @@ from .wsaresource import *
 # TODO: from .exoplanetresource import * (exoplanet)
 # TODO: from .genelabresource import * (genelab)
 # TODO: from .insightresource import * (insight - mars weather service)
-# TODO from .nasamediaresource import * (nasa image and video library)
+# TODO: from .nasamediaresource import * (nasa image and video library)
 # TODO: from .sscresource import * (satellite situation center)
 # TODO: from .mdresource import * (SSD/CNEOS mission design)
 # TODO: from .nhatsresource import * (SSD/CNEOS nhats)
