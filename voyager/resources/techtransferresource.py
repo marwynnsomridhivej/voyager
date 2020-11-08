@@ -349,7 +349,7 @@ class TechTransferResource(BaseResource):
     def __len__(self) -> int:
         return self._count
 
-    def _process_results(self) -> Union[Generator[Any], Any, None]:
+    def _process_results(self) -> Union[Generator[Any, None, None], Any, None]:
         if not (rs := self._data.get("results")):
             return None
         elif len(rs) != 1:
@@ -359,7 +359,7 @@ class TechTransferResource(BaseResource):
             return self._mapping.get(self._type)(rs[0])
 
     @property
-    def results(self) -> Union[Generator[Any], Any, None]:
+    def results(self) -> Union[Generator[Any, None, None], Any, None]:
         if self not in self._cache:
             self._cache[self] = self._process_results()
         return self._cache[self]

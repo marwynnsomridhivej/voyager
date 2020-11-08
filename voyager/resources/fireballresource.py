@@ -231,7 +231,7 @@ class FireballResource(BaseResource):
     def fields(self) -> List[str]:
         return self._fields
 
-    def _process_fb_data(self) -> Union[Generator[FireballRecord], FireballRecord, None]:
+    def _process_fb_data(self) -> Union[Generator[FireballRecord, None, None], FireballRecord, None]:
         if not (fb := self._data.get("data")):
             return None
         elif len(fb) != 1:
@@ -241,7 +241,7 @@ class FireballResource(BaseResource):
             return FireballRecord(fb[0], self._fields)
 
     @property
-    def data(self) -> Union[Generator[FireballRecord], FireballRecord, None]:
+    def data(self) -> Union[Generator[FireballRecord, None, None], FireballRecord, None]:
         if self not in self._cache:
             self._cache[self] = self._process_fb_data()
         return self._cache[self]

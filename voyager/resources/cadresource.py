@@ -199,7 +199,7 @@ class CADResource(BaseResource):
     def fields(self) -> List[str]:
         return self._fields
 
-    def _process_cad_data(self) -> Union[Generator[CADRecord], CADRecord, None]:
+    def _process_cad_data(self) -> Union[Generator[CADRecord, None, None], CADRecord, None]:
         if not (cad := self._data.get("data")):
             return None
         elif len(cad) != 1:
@@ -209,7 +209,7 @@ class CADResource(BaseResource):
             return CADRecord(cad[0], self._fields)
 
     @property
-    def data(self) -> Union[Generator[CADRecord], CADRecord, None]:
+    def data(self) -> Union[Generator[CADRecord, None, None], CADRecord, None]:
         if self not in self._cache:
             self._cache[self] = self._process_cad_data()
         return self._cache[self]

@@ -162,7 +162,7 @@ class TechportLibraryItem(object):
             return None
         return datetime.datetime.strptime(self._published_date, "")  # TODO: Find formatting
 
-    def _process_files(self) -> Union[Generator[TechportFile], TechportFile, None]:
+    def _process_files(self) -> Union[Generator[TechportFile, None, None], TechportFile, None]:
         if not (fl := self._data.get("files")):
             return None
         elif len(fl) != 1:
@@ -172,7 +172,7 @@ class TechportLibraryItem(object):
             return TechportFile(fl[0])
 
     @property
-    def files(self) -> Union[Generator[TechportFile], TechportFile, None]:
+    def files(self) -> Union[Generator[TechportFile, None, None], TechportFile, None]:
         if self not in self._cache:
             self._cache[self] = self._process_files()
         return self._cache[self]
@@ -378,7 +378,7 @@ class TechportResource(BaseResource):
     def principal_investigators(self) -> List[str]:
         return self._prin_investigator
 
-    def _process_library(self) -> Union[Generator[TechportLibraryItem], TechportLibraryItem, None]:
+    def _process_library(self) -> Union[Generator[TechportLibraryItem, None, None], TechportLibraryItem, None]:
         if not (li := self._data.get("libraryItems")):
             return None
         elif len(li) != 1:
@@ -388,7 +388,7 @@ class TechportResource(BaseResource):
             return TechportLibraryItem(li[0])
 
     @property
-    def library_items(self) -> Union[Generator[TechportLibraryItem], TechportLibraryItem, None]:
+    def library_items(self) -> Union[Generator[TechportLibraryItem, None, None], TechportLibraryItem, None]:
         if (li := f"{self}library") not in self._cache:
             self._cache[li] = self._process_library()
         return self._cache[li]
@@ -401,7 +401,7 @@ class TechportResource(BaseResource):
     def closeout_docs(self) -> Union[List[str], None]:
         return self.closeout_docs
 
-    def _process_orgs(self) -> Union[Generator[TechportOrganisation], TechportOrganisation, None]:
+    def _process_orgs(self) -> Union[Generator[TechportOrganisation, None, None], TechportOrganisation, None]:
         if not (org := self._data.get("supportingOrganizations")):
             return None
         elif len(org) != 1:
@@ -411,16 +411,16 @@ class TechportResource(BaseResource):
             return TechportOrganisation(org[0])
 
     @property
-    def supporting_organisations(self) -> Union[Generator[TechportOrganisation], TechportOrganisation, None]:
+    def supporting_organisations(self) -> Union[Generator[TechportOrganisation, None, None], TechportOrganisation, None]:
         if not (org := f"{self}organisation") in self._cache:
             self._cache[org] = self._process_orgs()
         return self._cache[org]
 
     @property
-    def supporting_organizations(self) -> Union[Generator[TechportOrganisation], TechportOrganisation, None]:
+    def supporting_organizations(self) -> Union[Generator[TechportOrganisation, None, None], TechportOrganisation, None]:
         return self.supporting_organisations
 
-    def _process_tas(self, ta_type: str) -> Union[Generator[TechportTechnologyArea], TechportTechnologyArea, None]:
+    def _process_tas(self, ta_type: str) -> Union[Generator[TechportTechnologyArea, None, None], TechportTechnologyArea, None]:
         if not (ta := self._data.get(ta_type)):
             return None
         elif len(ta) != 1:
@@ -430,13 +430,13 @@ class TechportResource(BaseResource):
             return TechportTechnologyArea(ta[0])
 
     @property
-    def primary_tas(self) -> Union[Generator[TechportTechnologyArea], TechportTechnologyArea, None]:
+    def primary_tas(self) -> Union[Generator[TechportTechnologyArea, None, None], TechportTechnologyArea, None]:
         if (ta := f"{self}primarytas") not in self._cache:
             self._cache[ta] = self._process_tas("primaryTas")
         return self._cache[ta]
 
     @property
-    def additional_tas(self) -> Union[Generator[TechportTechnologyArea], TechportTechnologyArea, None]:
+    def additional_tas(self) -> Union[Generator[TechportTechnologyArea, None, None], TechportTechnologyArea, None]:
         if (ta := f"{self}additionaltas") not in self._cache:
             self._cache[ta] = self._process_tas("additionalTas")
         return self._cache[ta]
