@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 from asyncio.events import AbstractEventLoop
 from collections import namedtuple
 from typing import List, Union
@@ -194,8 +194,8 @@ class NEOOrbitalData(object):
         return self._determination_date
 
     @property
-    def determination_datetime(self) -> datetime.datetime:
-        return datetime.datetime.strptime(
+    def determination_datetime(self) -> dt.datetime:
+        return dt.datetime.strptime(
             self._determination_date,
             "%Y-%m-%d %H:%M:%S")
 
@@ -204,8 +204,8 @@ class NEOOrbitalData(object):
         return self._first_observe_date
 
     @property
-    def first_observation_datetime(self) -> datetime.datetime:
-        return datetime.datetime.strptime(
+    def first_observation_datetime(self) -> dt.datetime:
+        return dt.datetime.strptime(
             self._first_observe_date,
             "%Y-%m-%d"
         )
@@ -215,8 +215,8 @@ class NEOOrbitalData(object):
         return self._last_observe_date
 
     @property
-    def last_observation_datetime(self) -> datetime.datetime:
-        return datetime.datetime.strptime(
+    def last_observation_datetime(self) -> dt.datetime:
+        return dt.datetime.strptime(
             self._last_observe_date,
             "%Y-%m-%d"
         )
@@ -331,16 +331,16 @@ class NEOCloseApproachData(object):
     def shortdate(self) -> str:
         return self._date
 
-    def _process_datetime(self, type: str) -> datetime.datetime:
+    def _process_datetime(self, type: str) -> dt.datetime:
         if type == "short":
-            return datetime.datetime.strptime(self._date, "%Y-%m-%d")
+            return dt.datetime.strptime(self._date, "%Y-%m-%d")
         elif type == "full":
-            return datetime.datetime.strptime(self._fulldate, "%Y-%b-%d %H:%M")
+            return dt.datetime.strptime(self._fulldate, "%Y-%b-%d %H:%M")
         else:
             raise VoyagerException("Invalid type passed for datetime conversion")
 
     @property
-    def shortdatetime(self) -> datetime.datetime:
+    def shortdatetime(self) -> dt.datetime:
         if (name := f"{self}short") not in self._cache:
             self._cache[name] = self._process_datetime("short")
         return self._cache[name]
@@ -350,13 +350,13 @@ class NEOCloseApproachData(object):
         return self._fulldate
 
     @property
-    def datetime(self) -> datetime.datetime:
+    def datetime(self) -> dt.datetime:
         if (name := f"{self}full") not in self._cache:
             self._cache[name] = self._process_datetime("full")
         return self._cache[name]
 
     @property
-    def epoch(self) -> datetime.datetime:
+    def epoch(self) -> dt.datetime:
         return self._epoch  # TODO: Come back here to give appropriate return
 
     @property
