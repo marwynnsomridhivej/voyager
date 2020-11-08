@@ -21,11 +21,11 @@ __all__ = [
 ]
 
 
-_CC = namedtuple("Centroid Coordinates", ["lat", "lon"])
-_DSCOVR = namedtuple("DSCOVR j2000 Position", ["x", "y", "z"])
-_LUNAR = namedtuple("Lunar j2000 Position", ["x", "y", "z"])
-_SUN = namedtuple("Sun j2000 Position", ["x", "y", "z"])
-_AQ = namedtuple("Attitude Quaternions", ["q0", "q1", "q2", "q3"])
+_CC = namedtuple("CentroidCoordinates", ["lat", "lon"])
+_DSCOVR = namedtuple("DSCOVRj2000Position", ["x", "y", "z"])
+_LUNAR = namedtuple("Lunarj2000Position", ["x", "y", "z"])
+_SUN = namedtuple("Sunj2000Position", ["x", "y", "z"])
+_AQ = namedtuple("AttitudeQuaternions", ["q0", "q1", "q2", "q3"])
 
 
 class EPICImage(object):

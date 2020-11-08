@@ -12,7 +12,7 @@ from .resources import (APODResource, CMEAnalysisResource, CMEResource,
                         GSTResource, NEOResource)
 from .utils import ROUTES, VALID_KEYS
 
-_RLS = namedtuple("Ratelimit Status", ['limit', 'remaining'])
+_RLS = namedtuple("RatelimitStatus", ['limit', 'remaining'])
 
 
 class HTTPClient():
