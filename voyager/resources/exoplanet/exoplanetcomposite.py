@@ -109,7 +109,7 @@ _ATTRS = {
 }
 
 
-class CompositeExoplanetData(object):
+class ExoplanetCompositeData(object):
     __slots__ = [
         '_data'
     ]
@@ -123,7 +123,7 @@ class CompositeExoplanetData(object):
         return self._data
 
     @classmethod
-    def from_dict(cls, data: dict) -> "CompositeExoplanetData":
+    def from_dict(cls, data: dict) -> "ExoplanetCompositeData":
         return cls(data)
 
 
@@ -133,7 +133,7 @@ def _add_func(name: str):
         if name not in self._cache:
             self._cache[name] = self._data.get(name)
         return self._cache[name]
-    setattr(CompositeExoplanetData, name, fn)
+    setattr(ExoplanetCompositeData, name, fn)
 
 
 for attr in _ATTRS:

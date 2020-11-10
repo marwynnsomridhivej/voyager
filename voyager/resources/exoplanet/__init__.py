@@ -1,5 +1,5 @@
 from .exoplanetconfirmed import Exoplanet
-from .exoplanetcomposite import CompositeExoplanetData
+from .exoplanetcomposite import ExoplanetCompositeData
 from .exoplanetalias import ExoplanetAlias
 from .exoplanetmicrolensing import ExoplanetMicrolensing
-from .exoplanetextended import ExtendedExoplanetData
+from .exoplanetextended import ExoplanetExtendedData
