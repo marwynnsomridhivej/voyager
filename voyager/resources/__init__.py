@@ -19,6 +19,7 @@ from .sepresource import *
 from .techportresource import *
 from .techtransferresource import *
 from .wsaresource import *
+from .exoplanetresource import *
 
 __author__ = "Marwynn Somridhivej"
 __copyright__ = "Copyright 2020, Marwynn Somridhivej"
@@ -30,7 +31,6 @@ __email__ = "msomridhivej329@gmail.com"
 __status__ = "Development"
 
 
-# TODO: from .exoplanetresource import * (exoplanet)
 # TODO: from .genelabresource import * (genelab)
 # TODO: from .insightresource import * (insight - mars weather service)
 # TODO: from .nasamediaresource import * (nasa image and video library)

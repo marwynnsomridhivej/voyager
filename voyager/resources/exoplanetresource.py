@@ -4,6 +4,11 @@ from typing import Any, Generator, Union
 from .base import BaseResource
 from .exoplanet import *
 
+
+__all__ = [
+    'ExoplanetResource',
+]
+
 _TYPES = {
     'exoplanets': ExoplanetConfirmedData,
     'compositepars': ExoplanetCompositeData,
