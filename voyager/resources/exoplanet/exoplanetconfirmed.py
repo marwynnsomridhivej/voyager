@@ -91,7 +91,6 @@ class ExoplanetConfirmedData(object):
     __slots__ = [
         '_data'
     ]
-    _cache = {}
 
     def __init__(self, data: dict) -> None:
         self._data = data
@@ -108,9 +107,7 @@ class ExoplanetConfirmedData(object):
 def _add_func(name: str):
     @property
     def fn(self) -> _ATTRS.get(name):
-        if name not in self._cache:
-            self._cache[name] = self._data.get(name)
-        return self._cache[name]
+        return self._data.get(name)
     setattr(ExoplanetConfirmedData, name, fn)
 
 
