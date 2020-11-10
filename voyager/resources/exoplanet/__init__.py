@@ -3,7 +3,7 @@
 # ============================
 from .exoplanetalias import ExoplanetAlias
 from .exoplanetcomposite import ExoplanetCompositeData
-from .exoplanetconfirmed import Exoplanet
+from .exoplanetconfirmed import ExoplanetConfirmedData
 from .exoplanetextended import ExoplanetExtendedData
 from .exoplanetmicrolensing import ExoplanetMicrolensing
 # ============================
@@ -39,7 +39,7 @@ from .tce import ThresholdCrossingEvent
 __all__ = [
     'ExoplanetAlias',
     'ExoplanetCompositeData',
-    'Exoplanet',
+    'ExoplanetConfirmedData',
     'ExoplanetExtendedData',
     'ExoplanetMicrolensing',
     'K2Candidate',
