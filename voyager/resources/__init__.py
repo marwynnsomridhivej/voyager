@@ -1,5 +1,4 @@
 from .apodresource import *
-from .base import *
 from .cadresource import *
 from .cmeresource import *
 from .earthresource import *
