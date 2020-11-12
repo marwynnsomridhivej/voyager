@@ -15,6 +15,7 @@ from .insightresource import *
 from .ipsresource import *
 from .marsroverresource import *
 from .mpcresource import *
+from .nasamediaresource import *
 from .neoresource import *
 from .notificationresource import *
 from .rberesource import *
@@ -33,7 +34,6 @@ __email__ = "msomridhivej329@gmail.com"
 __status__ = "Development"
 
 
-# TODO: from .nasamediaresource import * (nasa image and video library)
 # TODO: from .sscresource import * (satellite situation center)
 # TODO: from .mdresource import * (SSD/CNEOS mission design)
 # TODO: from .nhatsresource import * (SSD/CNEOS nhats)
