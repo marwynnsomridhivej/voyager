@@ -5,10 +5,13 @@ from .cmeresource import *
 from .earthresource import *
 from .eonetresource import *
 from .epicresource import *
+from .exoplanetresource import *
 from .fireballresource import *
 from .flrresource import *
+from .genelabresource import *
 from .gstresource import *
 from .hssresource import *
+from .insightresource import *
 from .ipsresource import *
 from .marsroverresource import *
 from .mpcresource import *
@@ -19,7 +22,6 @@ from .sepresource import *
 from .techportresource import *
 from .techtransferresource import *
 from .wsaresource import *
-from .exoplanetresource import *
 
 __author__ = "Marwynn Somridhivej"
 __copyright__ = "Copyright 2020, Marwynn Somridhivej"
@@ -31,8 +33,6 @@ __email__ = "msomridhivej329@gmail.com"
 __status__ = "Development"
 
 
-# TODO: from .genelabresource import * (genelab)
-# TODO: from .insightresource import * (insight - mars weather service)
 # TODO: from .nasamediaresource import * (nasa image and video library)
 # TODO: from .sscresource import * (satellite situation center)
 # TODO: from .mdresource import * (SSD/CNEOS mission design)
