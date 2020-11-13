@@ -14,7 +14,13 @@ from .utils import BASE_URL
 _DATE_RX = re.compile(r'[1|2][0|9][0-9]{2}')
 
 
-class Client():
+class Client(object):
+    __slots__ = [
+        '_key',
+        '_loop',
+        '_http_client',
+    ]
+
     def __init__(self,
                  session: aiohttp.ClientSession = None,
                  api_key: str = "DEMO_KEY",
@@ -27,7 +33,7 @@ class Client():
         self._http_client = HTTPClient(session=session,
                                        api_key=self._key,
                                        cache_size=self._cache_size,
-                                       loop=loop)
+                                       loop=self._loop)
 
     @property
     def key(self) -> str:
