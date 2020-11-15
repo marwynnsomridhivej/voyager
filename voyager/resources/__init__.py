@@ -13,9 +13,11 @@ from .hssresource import *
 from .insightresource import *
 from .ipsresource import *
 from .marsroverresource import *
+from .mdresource import *
 from .mpcresource import *
 from .nasamediaresource import *
 from .neoresource import *
+from .nhatsresource import *
 from .notificationresource import *
 from .rberesource import *
 from .sepresource import *
@@ -34,8 +36,6 @@ __status__ = "Development"
 
 
 # TODO: from .sscresource import * (satellite situation center)
-# TODO: from .mdresource import * (SSD/CNEOS mission design)
-# TODO: from .nhatsresource import * (SSD/CNEOS nhats)
 # TODO: from .scoutresource import * (SSD/CNEOS scout)
 # TODO: from .sentryresource import * (SSD/CNEOS sentry)
 # TODO: from .tleresource import * (TLE)
