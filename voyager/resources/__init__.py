@@ -20,10 +20,12 @@ from .neoresource import *
 from .nhatsresource import *
 from .notificationresource import *
 from .rberesource import *
+from .sentryresource import *
 from .sepresource import *
 from .techportresource import *
 from .techtransferresource import *
 from .wsaresource import *
+
 
 __author__ = "Marwynn Somridhivej"
 __copyright__ = "Copyright 2020, Marwynn Somridhivej"
@@ -37,6 +39,5 @@ __status__ = "Development"
 
 # TODO: from .sscresource import * (satellite situation center)
 # TODO: from .scoutresource import * (SSD/CNEOS scout)
-# TODO: from .sentryresource import * (SSD/CNEOS sentry)
 # TODO: from .tleresource import * (TLE)
 # TODO: from .wmtsresource mport * (Vesta/Moon/Mars Trek WMTS)
