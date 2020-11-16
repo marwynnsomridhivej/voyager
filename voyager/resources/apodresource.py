@@ -9,7 +9,7 @@ from .base import BaseResource
 try:
     from PIL import Image
 except ImportError:
-    pass
+    Image = None
 
 __all__ = [
     'APODResource',
